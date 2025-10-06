@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from src.helper import download_hugging_face_embeddings
+from src.helper import *
 from langchain_pinecone import PineconeVectorStore
 from langchain_openai import OpenAI
 from langchain.chains import create_retrieval_chain
@@ -19,10 +19,8 @@ PINECONE_API_KEY=os.environ.get('PINECONE_API_KEY')
 OPENAI_API_KEY=os.environ.get('OPENAI_API_KEY')
 
 os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-# os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 embeddings = download_hugging_face_embeddings()
-
 
 index_name = "chanakyabot"
 
@@ -34,26 +32,19 @@ docsearch = PineconeVectorStore.from_existing_index(
 
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k":3})
 
+# model_id = "google/flan-t5-base"
+# tokenizer = AutoTokenizer.from_pretrained(model_id)
+# model = AutoModelForSeq2SeqLM.from_pretrained(model_id)
 
-# llm = OpenAI(temperature=0.4, max_tokens=500)
 
-
-
-# Choose a model (e.g., a smaller, more manageable one)
-# model_id = "gpt2" 
-# model_id = "distilgpt2"
-model_id = "google/flan-t5-base"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForSeq2SeqLM.from_pretrained(model_id)
-
-# pipe_for_gpt_model = pipeline(
-#     "text-generation", model=model, tokenizer=tokenizer, max_new_tokens=256
+# pipe_for_google_model = pipeline(
+#     "text2text-generation", model=model, tokenizer=tokenizer, max_new_tokens=256
 # )
+# llm = HuggingFacePipeline(pipeline=pipe_for_google_model)
 
-pipe_for_google_model = pipeline(
-    "text2text-generation", model=model, tokenizer=tokenizer, max_new_tokens=256
-)
-llm = HuggingFacePipeline(pipeline=pipe_for_google_model)
+from langchain_community.llms import Ollama
+llm = Ollama(model="deepseek-r1:1.5b", temperature=0.4)
+
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
@@ -75,10 +66,13 @@ def index():
 def chat():
     msg = request.form["msg"]
     input = msg
-    print(input)
+    # print(input)
     response = rag_chain.invoke({"input": msg})
-    print("Response : ", response["answer"])
-    return str(response["answer"])
+    # print("Response : ", response["answer"])
+    final_answer = filter_response(msg, response["answer"])
+    cleaned_answer = re.sub(r"<think>.*?</think>", "", final_answer, flags=re.DOTALL).strip()
+
+    return str(cleaned_answer)
 
 
 
