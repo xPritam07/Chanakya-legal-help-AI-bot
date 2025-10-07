@@ -1,7 +1,8 @@
 from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
-
+from langchain_ollama import OllamaEmbeddings
+import re
 
 def load_data(data):
     loader= DirectoryLoader(data,
@@ -21,13 +22,14 @@ def text_split(extracted_data):
     return text_chunks
 
 
-def download_hugging_face_embeddings():
-    embeddings = HuggingFaceEmbeddings(
-        model_name='sentence-transformers/all-MiniLM-L6-v2',
-        model_kwargs={"device": "cuda"}
+
+def get_ollama_embeddings():
+    embeddings = OllamaEmbeddings(
+        model="nomic-embed-text:v1.5",
     )
     return embeddings
-import re
+
+
 keyword_to_sections = {
     # Robbery & related offenses
     "robbery": [392, 393, 394, 395, 397],

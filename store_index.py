@@ -28,7 +28,7 @@ index_name = "chanakyabot"
 if index_name not in name_list:
     pc.create_index(
         name=index_name,
-        dimension=384, 
+        dimension=768, 
         metric="cosine", 
         spec=ServerlessSpec(
             cloud="aws", 
