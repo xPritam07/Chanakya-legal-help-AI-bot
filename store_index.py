@@ -22,7 +22,7 @@ name_list = []
 for index in pc.list_indexes():
     name_list.append(index['name'])
 
-index_name = "chanakyabot"
+index_name = "chanakya"
 
 
 if index_name not in name_list:
