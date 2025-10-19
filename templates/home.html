@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chanakya - The legal help AI bot</title>
+    <link rel="stylesheet" href="/static/css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand-heading">
+                <h1>Chanakya</h1>
+            </div>
+            <div class="imgSection">
+                <img id="headerImg" src="/static/images/Gemini_Generated_Image_m66gy9m66gy9m66g.png" alt="">
+                <div id="onlineBtn"></div>
+            </div>
+        </div>
+
+        <div class="wrap">
+            <div class="chat-card" role="region" aria-label="Chat">
+                <div class="chat-head">
+                    <div class="mainSpace">
+                        <img id="mainSpaceImage" src="/static/images/justice-scale-svgrepo-com.svg" alt="">
+                        <div class="mainSpaceHeading">
+                            <h2>Let's have some legal chitchat?</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <main class="messages" id="messages" aria-live="polite">
+                    <!-- Messages will be appended here -->
+                </main>
+
+                <form id="composer" class="composer" autocomplete="off">
+                    <input id="textInput" name="msg" type="text" placeholder="Type your message..." required />
+                    <button type="submit" id="sendBtn" aria-label="Send">
+                    <span class="send-icon" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/script2.js"></script>
+</body>
+</html>
