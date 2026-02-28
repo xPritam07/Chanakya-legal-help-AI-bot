@@ -43,7 +43,7 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ## Contact
-For any inquiries or feedback, please reach out to [your-email@example.com].
+For any inquiries or feedback, please reach out to gpritam.works@gmail.com.
 
 ---
 This README file was created on 2026-02-28 03:18:10 UTC.
